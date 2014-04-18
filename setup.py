@@ -15,6 +15,7 @@ class Setup:
         self.initialize_cards()
         self.setup_me()
         self.setup_opponents()
+        self.setup_my_cards()
 
     def setup_conviction(self):
         self.game.conviction = Hand(card.COUNT_TYPES)
@@ -67,3 +68,7 @@ class Setup:
             player = Player(name, card_count)
             self.game.players.append(player)
             self.cards_accounted_for += card_count
+
+    def setup_my_cards(self):
+        while len(self.game.me.hand.has_set) < self.game.me.hand.count:
+            self.game.me.hand.has(self.game.prompt(SetPrompt('Your card:', self.game.cards, exclude=self.game.me.hand.has_set)))

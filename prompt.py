@@ -35,9 +35,9 @@ class IntegerPrompt(Prompt):
 
 class SetPrompt(Prompt):
 
-    def __init__(self, question, answer_set):
+    def __init__(self, question, answer_set, exclude=[]):
         super().__init__(question)
-        self.answer_set = answer_set
+        self.answer_set = [x for x in answer_set if x not in exclude]
 
     def validate(self, value):
         matches = []
