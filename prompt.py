@@ -41,16 +41,16 @@ class SetPrompt(Prompt):
 
     def validate(self, value):
         matches = []
-        query = re.compile(".*?".join(list(value)), re.I)
+        query = re.compile('.*?'.join(list(value)), re.I)
         for answer in self.answer_set:
             if query.search(str(answer)) != None:
                 matches.append(answer)
 
         if len(matches) == 0:
-            print("[{}]".format(", ".join(str(answer) for answer in self.answer_set)))
+            print('[{}]'.format(', '.join(str(answer) for answer in self.answer_set)))
             return False
         elif len(matches) > 1:
-            print("[{}]".format(", ".join(str(answer) for answer in matches)))
+            print('[{}]'.format(', '.join(str(answer) for answer in matches)))
             return False
         else:
             self.response_input = matches[0]
@@ -58,3 +58,14 @@ class SetPrompt(Prompt):
 
     def respond(self, response_input):
         self.validate(response_input)
+
+class BooleanPrompt(Prompt):
+
+    true_pattern = re.compile('^yes|y|true|1$', re.I)
+    false_pattern = re.compile('^no|n|false|0$', re.I)
+
+    def validate(self, value):
+        return BooleanPrompt.true_pattern.match(value) or false_pattern.match(value)
+
+    def response(self):
+        return BooleanPrompt.true_pattern.match(self.response_input)
