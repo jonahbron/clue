@@ -14,8 +14,10 @@ class Game:
         self.me = []
         self.conviction = None
 
-        self.gamefile = open('gamefile.txt', 'r+')
+        self.gamefile = open('gamefile.txt', 'r')
         self.prompt_queue = [x.rstrip("\n") for x in self.gamefile]
+        self.gamefile.close()
+        self.gamefile = open('gamefile.txt', 'w')
 
         setup = Setup()
         setup.run(self)
