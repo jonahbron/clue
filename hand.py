@@ -22,5 +22,18 @@ class Hand:
         self.__eliminate()
 
     def __eliminate(self):
-        # Narrow eliminations
-        pass
+        for elimination in set(self.eliminations_set):
+            for card in self.has_set:
+                if card in elimination:
+                    self.eliminations_set.remove(elimination)
+
+        for elimination in set(self.eliminations_set):
+            for card in self.lacks_set:
+                if card in elimination:
+                    self.eliminations_set.remove(elimination)
+                    self.eliminations_set.add(frozenset(set(elimination) - set([card])))
+
+        for elimination in set(self.eliminations_set):
+            if len(elimination) == 1:
+                self.eliminations_set.remove(elimination)
+                self.has(elimination.pop())
