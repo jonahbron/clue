@@ -10,6 +10,7 @@ class Game:
 
     def play(self):
         self.players = set()
+        self.hands = set()
         self.cards = set()
         self.me = None
         self.conviction = None
@@ -40,3 +41,7 @@ class Game:
                 break
 
         return prompt.response()
+
+    def notify_has(self, has_hand, card):
+        for hand in self.hands - set([has_hand]):
+            hand.lacks(card)

@@ -17,6 +17,9 @@ class Play:
         passed = self.__prompt_passes(accuser, accusation)
         self.__lack_passed(passed, accusation)
 
+        for player in self.game.players:
+            print("{}\n    {}".format(player, str(player.hand).replace("\n", "\n    ")))
+
     def __prompt_accusation(self):
         cards = set()
         for card_type in card.TYPES:
