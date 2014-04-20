@@ -14,10 +14,8 @@ class Game:
         self.me = None
         self.conviction = None
 
-        self.gamefile = open('gamefile.txt', 'r')
+        self.gamefile = open('gamefile.txt', 'r+')
         self.prompt_queue = [x.rstrip("\n") for x in self.gamefile]
-        self.gamefile.close()
-        self.gamefile = open('gamefile.txt', 'w')
 
         setup = Setup()
         setup.run(self)
@@ -31,11 +29,11 @@ class Game:
                 response = self.prompt_queue.pop(0)
             else:
                 response = input(prompt.question)
+                self.gamefile.write(response + "\n")
 
             prompt.respond(response)
             if prompt.satisfied():
                 self.prompt_history.append(response)
-                self.gamefile.write(response + "\n")
                 break
 
         return prompt.response()
