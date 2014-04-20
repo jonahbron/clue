@@ -12,7 +12,12 @@ class Play:
 
     def accusation(self):
         accuser = self.game.prompt(SetPrompt('Accuser:', self.game.players))
-        other_players = self.game.players - set([accuser])
+
+        accusation = self.__prompt_accusation()
+        passed = self.__prompt_passes(accuser, accusation)
+        self.__lack_passed(passed, accusation)
+
+    def __prompt_accusation(self):
         cards = set()
         for card_type in card.TYPES:
             cards.add(self.game.prompt(SetPrompt(
@@ -20,7 +25,10 @@ class Play:
                 [card for card in self.game.cards if card.type == card_type],
                 cards
             )))
+        return cards
 
+    def __prompt_passes(self, exception, cards):
+        other_players = self.game.players - set([exception])
         passed = set()
         answered = self.game.prompt(BooleanPrompt('Did anyone answer:'))
         if answered:
@@ -32,7 +40,9 @@ class Play:
                 passed.add(self.game.prompt(SetPrompt('Passed player:', other_players, passed)))
         else:
             passed = other_players
+        return passed
 
-        for player in passed:
+    def __lack_passed(self, players, cards):
+        for player in players:
             for c in cards:
                 player.hand.lacks(c)
