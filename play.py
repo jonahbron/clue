@@ -19,6 +19,8 @@ class Play:
 
         for player in self.game.players:
             print("{}\n    {}".format(player, str(player.hand).replace("\n", "\n    ")))
+        print("Conviction:")
+        print("    " + str(self.game.conviction).replace("\n", "\n    "))
 
     def __prompt_accusation(self):
         cards = set()
