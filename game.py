@@ -9,9 +9,9 @@ class Game:
     prompt_queue = []
 
     def play(self):
-        self.players = []
-        self.cards = []
-        self.me = []
+        self.players = set()
+        self.cards = set()
+        self.me = None
         self.conviction = None
 
         self.gamefile = open('gamefile.txt', 'r')

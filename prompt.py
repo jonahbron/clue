@@ -65,7 +65,7 @@ class BooleanPrompt(Prompt):
     false_pattern = re.compile('^no|n|false|0$', re.I)
 
     def validate(self, value):
-        return BooleanPrompt.true_pattern.match(value) or false_pattern.match(value)
+        return BooleanPrompt.true_pattern.match(value) or BooleanPrompt.false_pattern.match(value)
 
     def response(self):
         return BooleanPrompt.true_pattern.match(self.response_input)
