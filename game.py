@@ -9,14 +9,14 @@ class Game:
     prompt_history = []
     prompt_queue = []
 
-    def play(self):
+    def play(self, reset_gamefile):
         self.players = set()
         self.hands = set()
         self.cards = set()
         self.me = None
         self.conviction = None
 
-        self.gamefile = open('gamefile.txt', 'r+', buffering=1)
+        self.gamefile = open('gamefile.txt', 'w+' if reset_gamefile else 'r+', buffering=1)
         self.prompt_queue = [x.rstrip("\n") for x in self.gamefile]
 
         setup = Setup()
