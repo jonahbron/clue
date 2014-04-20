@@ -31,17 +31,24 @@ class Hand:
                 self.lacks(c)
 
     def __eliminate(self):
+        self.__filter_has_eliminations()
+        self.__reduce_lacks_eliminations()
+        self.__add_eliminated_has()
+
+    def __filter_has_eliminations(self):
         for elimination in set(self.eliminations_set):
             for card in self.has_set:
                 if card in elimination:
                     self.eliminations_set.discard(elimination)
 
+    def __reduce_lacks_eliminations(self):
         for elimination in set(self.eliminations_set):
             for card in self.lacks_set:
                 if card in elimination:
                     self.eliminations_set.discard(elimination)
                     self.eliminations_set.add(frozenset(set(elimination) - set([card])))
 
+    def __add_eliminated_has(self):
         for elimination in set(self.eliminations_set):
             if len(elimination) == 1:
                 self.eliminations_set.discard(elimination)
