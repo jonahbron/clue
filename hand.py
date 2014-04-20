@@ -1,11 +1,12 @@
 
 class Hand:
 
-    def __init__(self, count=0, has=[], lacks=[]):
+    def __init__(self, count=0, game=None, has=[], lacks=[]):
         self.count = max(count, len(has))
         self.has_set = set(has)
         self.lacks_set = set(lacks)
         self.eliminations_set = set()
+        self.game = game
 
     def has(self, card):
         self.has_set.add(card)

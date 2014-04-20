@@ -49,7 +49,7 @@ class Setup:
     def setup_me(self):
         name = self.game.prompt(Prompt('Your name:'))
         card_count = self.game.prompt(IntegerPrompt('Count your cards:', len(self.game.cards) - self.cards_accounted_for))
-        player = Player(name, Hand(card_count))
+        player = Player(name, Hand(card_count, game=self.game))
         self.game.me = player
         self.game.players.add(player)
         self.cards_accounted_for += card_count
@@ -65,7 +65,7 @@ class Setup:
                 ),
                 cards_left
             ))
-            player = Player(name, Hand(card_count))
+            player = Player(name, Hand(card_count, game=self.game))
             self.game.players.add(player)
             self.cards_accounted_for += card_count
 
