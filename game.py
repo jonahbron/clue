@@ -43,13 +43,20 @@ class Game:
 
         return prompt.response()
 
-    def notify_has(self, has_hand, _card):
+    def notify_has(self, has_hand, card):
         for hand in self.hands - set([has_hand]):
-            hand.lacks(_card)
+            hand.lacks(card)
 
+        self.__compute_conviction()
+
+    def notify_lacks(self, has_hand, card):
+        self.__compute_conviction()
+
+    def __compute_conviction(self):
         player_hands = [h for h in self.hands if h != self.conviction]
         conviction_types = [c.type for c in self.conviction.has_set]
         unconvicted_types = [t for t in card.TYPES if t not in conviction_types]
+
         for card_type in unconvicted_types:
             for c in [c for c in self.cards if c.type == card_type]:
                 all_lack = True

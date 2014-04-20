@@ -18,7 +18,7 @@ class Setup:
         self.setup_my_cards()
 
     def setup_conviction(self):
-        self.game.conviction = Hand(card.COUNT_TYPES)
+        self.game.conviction = Hand(card.COUNT_TYPES, game=self.game)
         self.game.hands.add(self.game.conviction)
         self.cards_accounted_for += card.COUNT_TYPES
 

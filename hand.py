@@ -11,6 +11,7 @@ class Hand:
     def has(self, card):
         self.has_set.add(card)
         self.lacks_set.discard(card)
+        self.__check_count()
         self.__eliminate()
         self.game.notify_has(self, card)
 
@@ -22,6 +23,12 @@ class Hand:
         self.lacks_set.add(card)
         self.has_set.discard(card)
         self.__eliminate()
+        self.game.notify_lacks(self, card)
+
+    def __check_count(self):
+        if len(self.has_set) >= self.count:
+            for c in self.game.cards - self.has_set:
+                self.lacks(c)
 
     def __eliminate(self):
         for elimination in set(self.eliminations_set):
@@ -38,7 +45,7 @@ class Hand:
         for elimination in set(self.eliminations_set):
             if len(elimination) == 1:
                 self.eliminations_set.discard(elimination)
-                self.has(elimination.pop())
+                self.has(list(elimination)[0])
 
     def __repr__(self):
         return "Has: {}\nLacks: {}\nOne ofs: \n    {}".format(
