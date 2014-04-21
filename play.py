@@ -24,11 +24,18 @@ class Play:
 
     def __prompt_accusation(self):
         cards = set()
-        for card_type in card.TYPES:
+        while len(cards) < 3:
+            types = set(card.TYPES) - set([c.type for c in cards])
+
+            # Render types in "x, y, and z" format
+            sentence_types = list(types)
+            if len(sentence_types) > 1:
+                sentence_types[-1] = 'or {}'.format(sentence_types[-1])
+            delimiter = ', ' if len(sentence_types) != 2 else ' '
+
             cards.add(self.game.prompt(SetPrompt(
-                'Type {} card:'.format(card_type),
-                [card for card in self.game.cards if card.type == card_type],
-                cards
+                '{} card:'.format(delimiter.join(sentence_types).capitalize()),
+                [c for c in self.game.cards if c.type in types]
             )))
         return cards
 
