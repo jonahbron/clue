@@ -40,6 +40,9 @@ class Play:
             answerer = self.game.prompt(SetPrompt('Who:', other_players))
             answerer.hand.elimination(cards)
 
+            if exception == self.game.me:
+                answerer.hand.has(self.game.prompt(SetPrompt('Card shown:', cards - answerer.hand.lacks_set)))
+
             passed_count = self.game.prompt(IntegerPrompt('How many passed:', len(other_players)))
             while len(passed) < passed_count:
                 passed.add(self.game.prompt(SetPrompt('Passed player:', other_players, passed)))
